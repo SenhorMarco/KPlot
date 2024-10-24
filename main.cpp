@@ -94,12 +94,13 @@ bool loop(ksdl::frame *frame_atual, ksdl::camera *camera, SDL_Window *janela, SD
 	}
 
 	SDL_SetRenderDrawColor(renderer, 211, 211,211, 255);
-    for(int i = camera->posicao_x % camera->range*pixel_por_x/10; i < largura; i+=camera->range*pixel_por_x/10){
-        SDL_RenderDrawLine(renderer, i,0,i, altura);
+
+    for(int i = 0; i < largura; i+=largura/10){
+        SDL_RenderDrawLine(renderer, i + camera->posicao_x % (largura/10),0, i + camera->posicao_x % (largura/10), altura);
     }
 
-    for(int i = camera->posicao_y % camera->range*pixel_por_y/10; i < largura; i+=camera->range*pixel_por_y/10){
-        SDL_RenderDrawLine(renderer, 0,i,largura, i);
+    for(int i = 0; i < altura; i+=altura/10){
+        SDL_RenderDrawLine(renderer,0, i + camera->posicao_y % (altura/10),largura,  i + camera->posicao_y % (altura/10));
     }
 
     //Reta eixo x
