@@ -1,4 +1,13 @@
+#include "exprtk_wrapper.h"
 #include "ksdl.h"
+#include <SDL.h>
+#include <stdio.h>
+#include <string>
+#include <math.h>
+#include <cmath>
+#include <iostream>
+#include <vector>
+#include <utility>
 
 #define T_FRAME 17
 #define V_CAMERA 20 //VELOCIDADE DA CAMERA DADA EM PIXELS
@@ -21,23 +30,16 @@ exprtk::parser<float> parser_expressao;
 float x;
 
 int main(int argc, char** args) {
+    SDL_Color vermelho = {255,0,0,255}, azul = {0,0,255,255}, verde = {0,120,0,255};
+    std::vector<ksdl::equacao*> graficos;
+    for(int i = 0; i < argc; i++){
+        graficos.push_back(new ksdl::equacao(args[i], vermelho));
+    }
     ksdl::frame frame_atual;
     ksdl::camera camera;
     camera.range_x = 40;
     camera.range_y = 40; //range da camera nos eixos
     int largura_janela =800, altura_janela = 800;
-    std::vector<ksdl::equacao*> graficos;
-    SDL_Color vermelho = {255,0,0,255}, azul = {0,0,255,255}, verde = {0,120,0,255};
-    std::string leitura;
-    while(true){
-        std::cin >> leitura;
-        if(leitura == "fim"){
-            break;
-        }
-        else{
-            graficos.push_back(new ksdl::equacao(leitura, vermelho));
-        }
-    }
 	if ( !iniciar(largura_janela, altura_janela) ){
         return 1;
 	}
@@ -51,7 +53,6 @@ int main(int argc, char** args) {
         grafico->expressao.register_symbol_table(simbolos);
         parser_expressao.compile(grafico->string_expressao, grafico->expressao);
     }
-
 
 	while ( loop(&frame_atual, &camera, janela, renderer, graficos)) {
         if(frame_atual.duracao() > T_FRAME){
@@ -95,17 +96,6 @@ bool loop(ksdl::frame *frame_atual, ksdl::camera *camera, SDL_Window *janela, SD
 	}
 
 	SDL_SetRenderDrawColor( renderer, 0, 0, 0, 255 );
-
-	if(teclado[SDL_SCANCODE_A]){
-        std::string leitura;
-        std::cin >> leitura;
-        SDL_Color vermelho = {255,0,0,255};
-        ksdl::equacao* novo_grafico= new ksdl::equacao(leitura,vermelho);
-        novo_grafico->expressao.register_symbol_table(simbolos);
-        parser_expressao.compile(novo_grafico->string_expressao, novo_grafico->expressao);
-        graficos.push_back(novo_grafico);
-	}
-
 	if (teclado[SDL_SCANCODE_LEFT]) {
         camera->posicao_x-=(V_CAMERA);
         camera->posicao_numerica_x-=((float)V_CAMERA/(float)pixel_por_x);

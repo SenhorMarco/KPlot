@@ -1,4 +1,14 @@
+#include "exprtk_wrapper.h"
 #include "ksdl.h"
+#pragma once
+#include <SDL.h>
+#include <stdio.h>
+#include <string>
+#include <math.h>
+#include <cmath>
+#include <iostream>
+#include <vector>
+#include <utility>
 
 int ksdl::frame::duracao(){
     ultima_duracao = tempo_final - tempo_inicial;

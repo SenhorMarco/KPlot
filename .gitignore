@@ -5,3 +5,6 @@ obj/
 *.layout
 exprtk.hpp
 exprtk.hpp.gch
+exprtk_wrapper.cpp
+exprtk_wrapper.h
+libexprtk_wrapper.a

@@ -1,4 +1,5 @@
-#include "exprtk.hpp"
+#include "exprtk_wrapper.h"
+#pragma once
 #include <SDL.h>
 #include <stdio.h>
 #include <string>
